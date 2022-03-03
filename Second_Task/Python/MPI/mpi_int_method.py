@@ -10,9 +10,8 @@ from mpi4py.MPI import Intracomm
 
 @dataclass
 class Arrays:
-    a: list
-    b: list
-    n: int
+    a: List[int]
+    b: List[int]
 
 
 def create_int_array(size: int):
@@ -34,26 +33,27 @@ if rank == 0:
     a: List[int] = create_int_array(n)
     b: List[int] = create_int_array(n)
     c: List[int] = []
-    data: Arrays = Arrays(a=a, b=b, n=n)
 
     for i in range(size - 1):
+        data: Arrays = Arrays(
+            a=a[int(i * (n / (size - 1))):int((i + 1) * (n / (size - 1)))],
+            b=b[int(i * (n / (size - 1))):int((i + 1) * (n / (size - 1)))]
+        )
         comm.send(data, dest=i + 1)
 
     for i in range(size - 1):
         res: List[int] = comm.recv(source=i + 1)
         c += res
 
-    print(f'Size: {n} elements ({n / 1024 / 1024 / 2} MB)')
+    print(f'Size: {n / 2 / 8} elements ({n / 1024 / 1024 / 2} MB)')
     print(f'Time: {(time.time() - start) * 1000:.2f} ms on {size - 1} threads')
 
 if rank != 0:
     data: Arrays = comm.recv(source=0)
-    sub_a: List[int] = data.a[int((rank - 1) * (n / (size - 1))):int((rank - 1) * (n / (size - 1) + 1))]
-    sub_b: List[int] = data.b[int((rank - 1) * (n / (size - 1))):int((rank - 1) * (n / (size - 1) + 1))]
 
     sub_c: List[int] = []
-    for i in range(len(sub_a)):
-        sub_c.append(sub_a[i] + sub_b[i])
+    for i in range(len(data.a)):
+        sub_c.append(data.a[i] + data.b[i])
 
     comm.send(sub_c, dest=0)
 
