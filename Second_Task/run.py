@@ -1,19 +1,19 @@
-#region Preparations
+# region Preparations
 import os
 import pathlib
 
 # Путь к корневой папке
 root = pathlib.Path().resolve()
 
-#endregion
+# endregion
 
-#region Task 1
+# region Task 1
 
 print("___________________________")
 print("Task 2")
 print("___________________________")
 
-#region Standard Python Interpreter
+# region Standard Python Interpreter
 # Запуск алгоритмов с использованием стандартного интерпретатора Python 3.8
 os.chdir(f'{root}\\python\\basic python')
 
@@ -41,9 +41,9 @@ print("Numpy Float Algorithm")
 print("___________________________")
 os.system('python numpy_float_method.py')
 
-#endregion
+# endregion
 
-#region Pypy JIT Compilation
+# region Pypy JIT Compilation
 # Запуск алгоритмов с использованием JIT компилятора Pypy
 print("___________________________")
 print("Pypy JIT Compilation")
@@ -69,9 +69,9 @@ print("Numpy Float Algorithm")
 print("___________________________")
 os.system('pypy numpy_float_method.py')
 
-#endregion
+# endregion
 
-#region Numba JIT Compilation
+# region Numba JIT Compilation
 # Запуск алгоритмов с использованием JIT компилятора Numba
 os.chdir(f'{root}\\numba')
 
@@ -99,9 +99,9 @@ print("Numpy Float Algorithm")
 print("___________________________")
 os.system('python numpy_float_method.py')
 
-#endregion
+# endregion
 
-#region MPI
+# region MPI
 # Запуск параллельных MPI алгоритмов
 os.chdir(f'{root}\\python\\mpi')
 total_memory = 2 * 1024 * 1024 * 1024
@@ -115,7 +115,7 @@ print("Integer Arrays")
 print("___________________________")
 for i in range(3, 10, 2):
     size = 1024 * 1024 * 4
-    while (size <= total_memory):
+    while size <= total_memory:
         os.system(f'mpiexec -n {i} python mpi_int_method.py {int(size)}')
         size *= 2
 
@@ -124,10 +124,10 @@ print("Float Arrays")
 print("___________________________")
 for i in range(3, 10, 2):
     size = 1024 * 1024 * 4
-    while (size <= total_memory):
+    while size <= total_memory:
         os.system(f'mpiexec -n {i} python mpi_float_method.py {int(size)}')
         size *= 2
 
-#endregion
+# endregion
 
-#endregion
+# endregion

@@ -14,11 +14,13 @@ class Arrays:
     b: list
     n: int
 
+
 def create_float_array(size: int):
     a: List[float] = []
     for _ in range(int(size)):
         a.append(random.random())
     return a
+
 
 comm: Intracomm = MPI.COMM_WORLD
 size: int = comm.Get_size()
@@ -32,17 +34,17 @@ if rank == 0:
     a: List[float] = create_float_array(n)
     b: List[float] = create_float_array(n)
     c: List[float] = []
-    data: Arrays = Arrays(a=a,b=b,n=n)
+    data: Arrays = Arrays(a=a, b=b, n=n)
 
-    for i in range(size-1):
-        comm.send(data, dest=i+1)
+    for i in range(size - 1):
+        comm.send(data, dest=i + 1)
 
-    for i in range(size-1):
-        res: List[float] = comm.recv(source=i+1)
+    for i in range(size - 1):
+        res: List[float] = comm.recv(source=i + 1)
         c += res
 
-    print("Size:",n ,"elements (",n / 1024 / 1024,"MB )")
-    print("Time:",time.time()-start,"seconds on",size-1,'threads')
+    print(f'Size: {n} elements ({n / 1024 / 1024} MB)')
+    print(f'Time: {(time.time() - start) * 1000:.2f} ms on {size - 1} threads')
 
 if rank != 0:
     data: Arrays = comm.recv(source=0)
@@ -55,6 +57,4 @@ if rank != 0:
 
     comm.send(sub_c, dest=0)
 
-
 MPI.Finalize()
-

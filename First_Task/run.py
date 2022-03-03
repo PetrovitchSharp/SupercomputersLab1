@@ -1,19 +1,19 @@
-#region Preparations
+# region Preparations
 import os
 import pathlib
 
 # Путь к корневой папке
 root = pathlib.Path().resolve()
 
-#endregion
+# endregion
 
-#region Task 1
+# region Task 1
 
 print("___________________________")
 print("Task 1")
 print("___________________________")
 
-#region Standard Python Interpreter
+# region Standard Python Interpreter
 # Запуск алгоритмов с использованием стандартного интерпретатора Python 3.8
 os.chdir(f'{root}\\python\\basic python')
 
@@ -36,9 +36,9 @@ print("Numpy Algorithm")
 print("___________________________")
 os.system('python numpy_method.py')
 
-#endregion
+# endregion
 
-#region Pypy JIT Compilation
+# region Pypy JIT Compilation
 # Запуск алгоритмов с использованием JIT компилятора Pypy
 print("___________________________")
 print("Pypy JIT Compilation")
@@ -59,9 +59,9 @@ print("Numpy Algorithm")
 print("___________________________")
 os.system('pypy numpy_method.py')
 
-#endregion
+# endregion
 
-#region Numba JIT Compilation
+# region Numba JIT Compilation
 # Запуск алгоритмов с использованием JIT компилятора Numba
 os.chdir(f'{root}\\numba')
 
@@ -84,9 +84,9 @@ print("Numpy Algorithm")
 print("___________________________")
 os.system('python numpy_method.py')
 
-#endregion
+# endregion
 
-#region MPI
+# region MPI
 # Запуск параллельных MPI алгоритмов
 os.chdir(f'{root}\\python\\mpi')
 
@@ -107,6 +107,6 @@ for i in range(3, 10, 2):
     for j in range(1, 11):
         os.system(f'mpiexec -n {i} python mpi_second_method.py {int(j * 1e6)}')
 
-#endregion
+# endregion
 
-#endregion
+# endregion
